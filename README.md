@@ -113,5 +113,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Special thanks to the medical professionals who helped in validating the results
 
 ## Contact
+- Lucky Sharma (@itsluckysharma01)
+  Gmail:- panditluckysharma9977@gmail.com
 
-For any queries or suggestions, please open an issue in the repository or contact the maintainers.
