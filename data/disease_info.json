@@ -1,0 +1,272 @@
+{
+  "Actinic Keratosis Basal Cell Carcinoma and other Malignant Lesions": {
+    "display_name": "Actinic/Basal Cell/Malignant Lesions",
+    "clinical_summary": "Includes sun-damage and potentially cancerous lesion patterns that require medical review.",
+    "common_signs": ["Rough or scaly patch", "Persistent lesion that may bleed or crust"],
+    "possible_triggers": ["Long-term UV exposure", "Age and fair skin risk"],
+    "recommended_actions": ["Book dermatology evaluation soon", "Use strict sun protection", "Do not delay biopsy advice"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Oncodermatology"
+  },
+  "Akne": {
+    "display_name": "Acne",
+    "clinical_summary": "Inflammatory or comedonal acne lesions caused by pore blockage and sebum changes.",
+    "common_signs": ["Blackheads/whiteheads", "Papules or pustules on face/back/chest"],
+    "possible_triggers": ["Hormonal changes", "Occlusive cosmetics, stress"],
+    "recommended_actions": ["Use non-comedogenic skincare", "Avoid squeezing lesions", "Consult dermatologist for persistent acne"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Atopic Dermatitis": {
+    "display_name": "Atopic Dermatitis",
+    "clinical_summary": "Chronic inflammatory eczema with itch and dry, sensitive skin.",
+    "common_signs": ["Dry itchy patches", "Red or thickened skin in flexural areas"],
+    "possible_triggers": ["Allergens/irritants", "Weather and skin barrier weakness"],
+    "recommended_actions": ["Moisturize frequently", "Avoid known triggers", "Seek medical plan for flare control"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist/Allergy specialist"
+  },
+  "Basal Cell Carcinoma": {
+    "display_name": "Basal Cell Carcinoma",
+    "clinical_summary": "Common skin cancer type that grows slowly but needs treatment.",
+    "common_signs": ["Pearly bump or non-healing sore", "Lesion with rolled border"],
+    "possible_triggers": ["UV exposure", "History of skin cancer"],
+    "recommended_actions": ["Arrange dermatology appointment quickly", "Do not self-treat lesion", "Follow biopsy/excision guidance"],
+    "urgency": "High",
+    "specialist": "Dermatologist"
+  },
+  "Benign Keratosis-like Lesions": {
+    "display_name": "Benign Keratosis-like Lesions",
+    "clinical_summary": "Usually non-cancerous keratotic growth patterns but may mimic malignant lesions.",
+    "common_signs": ["Waxy or stuck-on appearance", "Pigmented rough surface"],
+    "possible_triggers": ["Age-related skin change", "Genetic tendency"],
+    "recommended_actions": ["Monitor size/color change", "Seek dermoscopy if uncertain", "Use gentle skin care"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Bullous Disease Photos": {
+    "display_name": "Bullous Disease",
+    "clinical_summary": "Blistering disorders that may be autoimmune and can become severe.",
+    "common_signs": ["Fluid-filled blisters", "Skin fragility and pain"],
+    "possible_triggers": ["Autoimmune activity", "Drug-induced reactions"],
+    "recommended_actions": ["Get specialist review promptly", "Protect blisters from trauma", "Avoid popping blisters"],
+    "urgency": "High",
+    "specialist": "Dermatologist"
+  },
+  "Cellulitis Impetigo and other Bacterial Infections": {
+    "display_name": "Bacterial Skin Infection",
+    "clinical_summary": "Includes bacterial infection patterns such as cellulitis and impetigo.",
+    "common_signs": ["Red warm tender area", "Honey-colored crust or spreading redness"],
+    "possible_triggers": ["Skin break or wound", "Poor hygiene, low immunity"],
+    "recommended_actions": ["Seek medical care for antibiotics", "Keep area clean", "Watch for fever/spreading pain"],
+    "urgency": "High",
+    "specialist": "Dermatologist/General physician"
+  },
+  "Eczema": {
+    "display_name": "Eczema",
+    "clinical_summary": "Inflammatory skin condition causing itchy, dry, and irritated patches.",
+    "common_signs": ["Itchy inflamed patches", "Dry scaling skin"],
+    "possible_triggers": ["Irritants and soaps", "Stress and weather"],
+    "recommended_actions": ["Use fragrance-free emollients", "Avoid hot water and harsh products", "Consult doctor if persistent"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Enfeksiyonel": {
+    "display_name": "Infectious Skin Condition",
+    "clinical_summary": "General infectious skin category that may include bacterial, viral, or fungal causes.",
+    "common_signs": ["Inflamed lesion", "Possible discharge/crusting"],
+    "possible_triggers": ["Microbial exposure", "Compromised skin barrier"],
+    "recommended_actions": ["Avoid scratching and sharing towels", "Keep lesion clean/dry", "Take medical advice for targeted treatment"],
+    "urgency": "Moderate to High",
+    "specialist": "Dermatologist"
+  },
+  "Exanthems and Drug Eruptions": {
+    "display_name": "Exanthems and Drug Eruptions",
+    "clinical_summary": "Widespread rash often linked to infections or medication reactions.",
+    "common_signs": ["Diffuse red rash", "Recent medicine use history"],
+    "possible_triggers": ["Drug hypersensitivity", "Viral illness"],
+    "recommended_actions": ["Review recent medications with doctor", "Seek urgent care for breathing/swelling", "Avoid re-exposure to suspected trigger"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Allergy specialist"
+  },
+  "Hair Loss Photos Alopecia and other Hair Diseases": {
+    "display_name": "Alopecia and Hair Disorders",
+    "clinical_summary": "Includes patchy or diffuse hair loss patterns with multiple causes.",
+    "common_signs": ["Hair thinning or bald patches", "Scalp scaling or inflammation"],
+    "possible_triggers": ["Autoimmune/hormonal factors", "Nutritional deficiency or stress"],
+    "recommended_actions": ["Document progression with photos", "Check scalp hygiene and nutrition", "Consult dermatologist/trichologist"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist/Trichologist"
+  },
+  "Herpes HPV and other STDs Photos": {
+    "display_name": "Herpes/HPV/STD-related Lesions",
+    "clinical_summary": "May indicate viral or sexually transmitted skin/mucosal lesions.",
+    "common_signs": ["Grouped vesicles or warts", "Pain, burning, or recurrent lesions"],
+    "possible_triggers": ["Viral exposure", "Immune suppression"],
+    "recommended_actions": ["Seek confidential clinical diagnosis", "Avoid sexual contact until evaluated", "Follow antiviral/STD treatment plan"],
+    "urgency": "High",
+    "specialist": "Dermatologist/STD clinic"
+  },
+  "Light Diseases and Disorders of Pigmentation": {
+    "display_name": "Pigmentation Disorder",
+    "clinical_summary": "Color change disorders including hypo/hyperpigmented patches.",
+    "common_signs": ["Uneven skin color patches", "Symmetric pigment changes"],
+    "possible_triggers": ["Sun exposure", "Inflammation or endocrine factors"],
+    "recommended_actions": ["Use daily sunscreen", "Avoid irritant cosmetics", "Get dermatologist confirmation"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Lupus and other Connective Tissue diseases": {
+    "display_name": "Lupus/Connective Tissue Disease",
+    "clinical_summary": "Autoimmune skin patterns that can be linked to systemic disease.",
+    "common_signs": ["Photosensitive rash", "Persistent plaques or facial erythema"],
+    "possible_triggers": ["Autoimmune activity", "Sunlight and systemic inflammation"],
+    "recommended_actions": ["Arrange specialist evaluation", "Use strong photoprotection", "Discuss systemic symptom screening"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Rheumatologist"
+  },
+  "Melanocytic Nevi": {
+    "display_name": "Melanocytic Nevi",
+    "clinical_summary": "Common moles; most are benign but atypical changes require review.",
+    "common_signs": ["Brown or black mole", "Stable small pigmented lesion"],
+    "possible_triggers": ["Genetics", "Sun exposure"],
+    "recommended_actions": ["Use ABCDE mole self-check", "Track change over time", "Consult if rapid change/bleeding"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Melanoma": {
+    "display_name": "Melanoma",
+    "clinical_summary": "Potentially aggressive skin cancer requiring urgent diagnosis and treatment.",
+    "common_signs": ["Asymmetry, irregular border", "Rapid color/size evolution"],
+    "possible_triggers": ["UV damage", "Personal/family melanoma history"],
+    "recommended_actions": ["Urgent dermatology/oncology referral", "Do not delay biopsy", "Avoid sun exposure immediately"],
+    "urgency": "Critical",
+    "specialist": "Dermatologist/Oncologist"
+  },
+  "Nail Fungus and other Nail Disease": {
+    "display_name": "Nail Fungus and Nail Disease",
+    "clinical_summary": "Includes fungal and non-fungal nail abnormalities.",
+    "common_signs": ["Thickened or discolored nail", "Brittle nail plate"],
+    "possible_triggers": ["Fungal exposure", "Trauma or chronic moisture"],
+    "recommended_actions": ["Keep nails dry and trimmed", "Use separate nail tools", "Seek lab-confirmed treatment"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Normal Skin": {
+    "display_name": "Normal Skin",
+    "clinical_summary": "No obvious pathological class pattern was dominant in this image.",
+    "common_signs": ["Even tone and texture", "No dominant lesion signature"],
+    "possible_triggers": ["Not applicable", "Not applicable"],
+    "recommended_actions": ["Maintain regular skin hygiene", "Use sunscreen daily", "Repeat capture if symptoms are present"],
+    "urgency": "None",
+    "specialist": "Routine care"
+  },
+  "Pigment": {
+    "display_name": "Pigment",
+    "clinical_summary": "General pigment-focused class with possible benign or inflammatory causes.",
+    "common_signs": ["Darker or lighter patches", "Localized color variation"],
+    "possible_triggers": ["Post-inflammatory changes", "Sun and hormonal effects"],
+    "recommended_actions": ["Use broad-spectrum SPF", "Avoid harsh exfoliation", "Get dermatologist opinion for persistent change"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Poison Ivy Photos and other Contact Dermatitis": {
+    "display_name": "Contact Dermatitis/Poison Ivy",
+    "clinical_summary": "Allergic or irritant dermatitis due to contact exposure.",
+    "common_signs": ["Itchy red rash", "Linear vesicular lesions"],
+    "possible_triggers": ["Plant resin or chemical irritants", "Fragrance/metals"],
+    "recommended_actions": ["Wash exposed skin early", "Avoid trigger contact", "Use medical care for severe swelling"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Psoriasis pictures Lichen Planus and related diseases": {
+    "display_name": "Psoriasis/Lichen Planus Related",
+    "clinical_summary": "Chronic inflammatory plaques or papules from immune-mediated disease.",
+    "common_signs": ["Well-defined scaly plaques", "Violaceous itchy papules"],
+    "possible_triggers": ["Immune dysregulation", "Stress, infections, medicines"],
+    "recommended_actions": ["Moisturize and avoid skin trauma", "Discuss topical/systemic therapy", "Track flare triggers"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Rosacea Photos": {
+    "display_name": "Rosacea",
+    "clinical_summary": "Facial inflammatory condition with flushing and persistent redness.",
+    "common_signs": ["Central facial redness", "Visible blood vessels or papules"],
+    "possible_triggers": ["Heat, spicy food, alcohol", "Sun and stress"],
+    "recommended_actions": ["Identify and avoid personal triggers", "Use gentle skincare", "Seek targeted treatment plan"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Scabies Lyme Disease and other Infestations and Bites": {
+    "display_name": "Infestations/Bites",
+    "clinical_summary": "Includes parasitic infestation and bite-related inflammatory patterns.",
+    "common_signs": ["Intense itch, especially at night", "Burrows, bite marks, or spreading rash"],
+    "possible_triggers": ["Mite infestation", "Insect/tick exposure"],
+    "recommended_actions": ["Seek prompt treatment for patient and contacts", "Wash linens/clothes on high heat", "Monitor for systemic symptoms"],
+    "urgency": "Moderate to High",
+    "specialist": "Dermatologist/Infectious disease"
+  },
+  "Seborrheic Keratoses and other Benign Tumors": {
+    "display_name": "Seborrheic Keratosis/Benign Tumors",
+    "clinical_summary": "Common benign growth patterns, often age-related.",
+    "common_signs": ["Stuck-on waxy lesion", "Slowly growing benign-appearing bump"],
+    "possible_triggers": ["Aging", "Genetic predisposition"],
+    "recommended_actions": ["Observe for sudden changes", "Get checked if irritated/bleeding", "Consider removal if symptomatic"],
+    "urgency": "Low",
+    "specialist": "Dermatologist"
+  },
+  "Systemic Disease": {
+    "display_name": "Systemic Disease Skin Manifestation",
+    "clinical_summary": "Skin findings that may reflect broader internal/systemic conditions.",
+    "common_signs": ["Persistent unexplained rash", "Associated fatigue/fever/joint symptoms"],
+    "possible_triggers": ["Autoimmune/metabolic/infectious conditions", "Medication reactions"],
+    "recommended_actions": ["Take comprehensive medical evaluation", "Share full symptom history", "Do baseline blood and specialist screening"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Internal medicine"
+  },
+  "Tinea Ringworm Candidiasis and other Fungal Infections": {
+    "display_name": "Fungal Infection",
+    "clinical_summary": "Fungal lesions such as ringworm/candidiasis in skin folds or body sites.",
+    "common_signs": ["Ring-shaped itchy rash", "Scaling edge with central clearing"],
+    "possible_triggers": ["Warm humid environment", "Shared personal items"],
+    "recommended_actions": ["Keep area dry and clean", "Use doctor-advised antifungal treatment", "Avoid sharing towels/clothes"],
+    "urgency": "Moderate",
+    "specialist": "Dermatologist"
+  },
+  "Urticaria Hives": {
+    "display_name": "Urticaria (Hives)",
+    "clinical_summary": "Transient raised itchy wheals often due to allergic or immune triggers.",
+    "common_signs": ["Raised itchy welts", "Rapidly shifting rash"],
+    "possible_triggers": ["Food/drug allergy", "Infection or stress"],
+    "recommended_actions": ["Track possible trigger exposure", "Seek urgent care for lip/tongue swelling", "Use prescribed antihistamines"],
+    "urgency": "Moderate to High",
+    "specialist": "Dermatologist/Allergy specialist"
+  },
+  "Vascular Tumors": {
+    "display_name": "Vascular Tumor",
+    "clinical_summary": "Abnormal vascular growths that need differential diagnosis.",
+    "common_signs": ["Red-purple nodules or plaques", "Lesion may bleed on trauma"],
+    "possible_triggers": ["Vascular proliferation", "Congenital or acquired factors"],
+    "recommended_actions": ["Get dermatology evaluation", "Avoid lesion trauma", "Follow imaging/biopsy advice if indicated"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Vascular specialist"
+  },
+  "Vasculitis Photos": {
+    "display_name": "Vasculitis",
+    "clinical_summary": "Inflammation of blood vessels with potential skin and systemic impact.",
+    "common_signs": ["Purpuric spots or painful lesions", "Ulceration in severe cases"],
+    "possible_triggers": ["Autoimmune disease", "Drug or infection related inflammation"],
+    "recommended_actions": ["Seek urgent medical assessment", "Report systemic symptoms", "Follow lab and biopsy workup"],
+    "urgency": "High",
+    "specialist": "Dermatologist/Rheumatologist"
+  },
+  "Warts Molluscum and other Viral Infections": {
+    "display_name": "Viral Skin Infection",
+    "clinical_summary": "Includes wart and molluscum-like viral lesion patterns.",
+    "common_signs": ["Small papules with rough or central core", "Clustered contagious lesions"],
+    "possible_triggers": ["Skin-to-skin viral spread", "Shared surfaces or tools"],
+    "recommended_actions": ["Avoid picking lesions", "Do not share razors/towels", "Consult for cryotherapy/topical treatment"],
+    "urgency": "Low to Moderate",
+    "specialist": "Dermatologist"
+  }
+}

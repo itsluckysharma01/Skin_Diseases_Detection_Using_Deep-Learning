@@ -1,119 +1,139 @@
-# Skin Diseases Detection using Deep Learning
+# Skin Disease Detection Using Deep Learning
+
+AI-powered skin disease classification project with:
+
+- 30-class TensorFlow model (from notebook training outputs)
+- Flask web app with camera capture + upload
+- Interactive disease explorer with recommendations
+
+## Quick Links
+
+- [Overview](#overview)
+- [Flask Web App](#flask-web-app)
+- [Run Locally](#run-locally)
+- [API Endpoints](#api-endpoints)
+- [Project Structure](#project-structure)
+- [Medical Disclaimer](#medical-disclaimer)
+- [Author](#author)
 
 ## Overview
 
-This project implements a deep learning solution for detecting and classifying various skin diseases from images. Using advanced convolutional neural networks, the system can help in early detection and classification of skin conditions, potentially assisting healthcare professionals in diagnosis.
+This project predicts skin disease classes from an image and returns:
 
-## Dataset Details
+- Top prediction + confidence
+- Top-3 ranked classes
+- Class-wise guidance and suggested next action
+- Full 30-class reference data loaded from notebook output artifacts
 
-The dataset contains 34 different classes of skin diseases with a total of approximately 15,000 images. Each class represents a different skin condition with both English and Hindi names.
+The model and class map are loaded from:
 
-### Classes and Image Distribution
+- `Output/outputs/skin_disease_final.keras` (preferred)
+- `Output/outputs/best_phase2.keras` (fallback)
+- `Output/outputs/class_names.json`
 
-1. Eczema (सूजन) - 500 images
-2. Melanoma (त्वचा कैंसर) - 1000 images
-3. Atopic Dermatitis (एक्ज़िमा खुजलीदार त्वचा की बीमारी) - 500 images
-4. Basal Cell Carcinoma (कम घातक कैंसर) - 1000 images
-5. Melanocytic Nevi (तिल) - 500 images
-6. Benign Keratosis-like Lesions (गैर-हानिकारक घाव) - 500 images
-7. Psoriasis pictures Lichen Planus (पपड़ीदार धब्बे) - 500 images
-8. Seborrheic Keratoses and other Benign Tumors (त्वचा ट्यूमर) - 500 images
-9. Tinea Ringworm Candidiasis (दाद) - 500 images
-10. Warts Molluscum and Viral Infections (मस्से) - 500 images
-11. Pigment (रंगद्रव्य) - 500 images
-12. Enfeksiyonel (संक्रमणजन्य रोग) - 500 images
-13. Akne (मुहाँसे) - 322 images
-14. Enfeksiyonel (छूत) - 500 images
-15. Actinic Keratosis and Malignant Lesions (पूर्व-कैंसर त्वचा) - 500 images
-16. Bullous Disease (फफोले वाले त्वचा रोग) - 448 images
-17. Cellulitis Impetigo and Bacterial Infections - 288 images
-18. Exanthems and Drug Eruptions (त्वचा पर दाने) - 404 images
-19. Hair Loss, Alopecia and Hair Diseases - 239 images
-20. Herpes, HPV and STDs - 405 images
-21. Light Diseases and Pigmentation Disorders - 568 images
-22. Lupus and Connective Tissue diseases (संयोजी ऊतक की बीमारियाँ) - 420 images
-23. Nail Fungus and Nail Diseases - 500 images
-24. Poison Ivy and Contact Dermatitis (त्वचा की जलन) - 260 images
-25. Rosacea (गुलाबी फुंसी) - 500 images
-26. Scabies, Lyme Disease and Bites (किट-पतंग के काटने) - 431 images
-27. Seborrheic Keratoses and Benign Tumors (सौम्य त्वचा के ट्यूमर) - 500 images
-28. Systemic Disease (संपूर्ण शरीर) - 606 images
-29. Fungal Infections (फंगल संक्रमण) - 500 images
-30. Urticaria Hives (छींक-धब्बे) - 212 images
-31. Vascular Tumors (रक्त वाहिकाओं के ट्यूमर) - 482 images
-32. Vasculitis (रक्त वाहिका सूजन) - 416 images
-33. Viral Infections (वायरल संक्रमण) - 500 images
-34. Normal Skin - 1000 images
+## Flask Web App
 
-## Features
+### Features
 
-- Automated skin disease detection from images
-- Multi-class classification of various skin conditions
-- Deep learning-based image analysis
-- Interactive Jupyter notebook implementation
-- High accuracy in disease classification
+- Upload image from desktop/mobile
+- Direct camera capture in browser
+- Prediction panel with doctor-focused recommendations
+- Searchable explorer of all 30 classes
+- Classification workflow explanation section
+- About and contact section (GitHub, LinkedIn, email)
 
-## Technologies Used
+### Frontend Stack
 
-- Python
-- TensorFlow/Keras
-- Jupyter Notebook
-- NumPy
-- Pandas
-- Matplotlib/Seaborn for visualization
+- HTML + CSS + JavaScript
+- Responsive design for desktop and mobile
+- Camera support using `navigator.mediaDevices.getUserMedia`
 
-## Installation
+## Run Locally
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/itsluckysharma01/Skin_Diseases_Detection_Using_Deep-Learning_.git
-```
-
-2. Install required dependencies:
+1. Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+2. Start Flask app from the `Files` directory:
 
-1. Open the Jupyter notebook:
-   - Navigate to the `Files` directory
-   - Open `Skin_Diseases_Detection_Using_Deep_Learning(NOTEBOOK).ipynb`
-2. Follow the step-by-step instructions in the notebook to:
-   - Load and preprocess the dataset
-   - Train the model
-   - Evaluate results
-   - Make predictions
+```bash
+python app.py
+```
+
+3. Open in browser:
+
+```text
+http://127.0.0.1:5000
+```
+
+### Optional Environment Variables
+
+- `FLASK_HOST` (default: `127.0.0.1`)
+- `FLASK_PORT` (default: `5000`)
+- `FLASK_DEBUG` (default: `1`)
+
+## API Endpoints
+
+<details>
+<summary><strong>POST /api/predict</strong></summary>
+
+- Accepts multipart form with `image`
+- Returns prediction result with top-3 classes and recommendations
+
+</details>
+
+<details>
+<summary><strong>GET /api/diseases</strong></summary>
+
+- Returns all class metadata used by frontend explorer
+
+</details>
+
+<details>
+<summary><strong>GET /health</strong></summary>
+
+- Returns model load status and class count
+
+</details>
 
 ## Project Structure
 
-```
+```text
 Files/
-├── requirements.txt
-└── Skin_Diseases_Detection_Using_Deep_Learning(NOTEBOOK).ipynb
+|-- app.py
+|-- data/
+|   `-- disease_info.json
+|-- static/
+|   |-- css/
+|   |   `-- style.css
+|   `-- js/
+|       `-- app.js
+|-- templates/
+|   `-- index.html
+|-- Output/
+|   `-- outputs/
+|       |-- class_names.json
+|       |-- best_phase2.keras
+|       `-- skin_disease_final.keras
+|-- requirements.txt
+`-- *.ipynb
 ```
 
-## Contributing
+## Notebook + Training Artifacts
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Training notebooks and outputs are included in this repository. The deployed Flask app uses the saved model and metadata generated during notebook training.
 
-## License
+## Medical Disclaimer
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This tool is for educational and assistive use only.
+It is not a substitute for professional medical diagnosis, treatment, or emergency care.
 
 ## Author
 
-- Lucky Sharma (@itsluckysharma01)
-
-## Acknowledgments
-
-- Thanks to all contributors who helped in developing this project
-- Special thanks to the medical professionals who helped in validating the results
-
-## Contact
-- Lucky Sharma (@itsluckysharma01)
-- ---
-  Gmail:- itsluckysharma001@gmail.com
-
+- Lucky Sharma
+-@itsluckysharma01
+- GitHub: https://github.com/itsluckysharma01
+- LinkedIn: https://www.linkedin.com/in/itsluckysharma01/
+- Email: itsluckysharma001@gmail.com
