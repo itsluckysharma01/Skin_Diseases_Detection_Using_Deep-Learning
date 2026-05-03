@@ -1,139 +1,125 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Skin Disease AI Assistant</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-  <header class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content container">
-      <p class="eyebrow">Flask + TensorFlow Medical AI Interface</p>
-      <h1>Skin Disease Detection for 30 Classes</h1>
-      <p class="subtitle">
-        Upload a skin image or capture directly from your camera to get prediction, confidence scores,
-        possible guidance, and recommended next clinical steps.
-      </p>
-      <div class="hero-stats">
-        <div><span>{{ disease_count }}</span> classes</div>
-        <div><span>{{ image_size }}</span> model input</div>
-        <div><span>{{ model_path }}</span> active model</div>
-      </div>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skin Diseases Detection Using Deep Learning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('favicon') }}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <p class="eyebrow">Skin Diseases Detection Using Deep Learning</p>
+        <h1><strong>30 Classes Based Skin Diseases Detection Using Deep Learning</strong></h1>
+        <p class="lede">
+          Upload a dermoscopy or skin photo. The model (
+          <strong>{{ model_name }}</strong>
+          ) returns ranked class probabilities for
+          <strong>{{ num_classes }}</strong>
+          categories at
+          <strong>{{ img_size }}×{{ img_size }}</strong>
+          px, matching your training notebook pipeline.
+        </p>
+      </header>
 
-  <main class="container main-grid">
-    <section class="card detect-card">
-      <h2>Detect from Image</h2>
-      <p class="muted">Use either Upload mode or Camera mode. Supported formats: JPG, JPEG, PNG, WEBP.</p>
-
-      <div class="tab-row">
-        <button class="tab-btn active" data-tab="upload">Upload</button>
-        <button class="tab-btn" data-tab="camera">Camera</button>
-      </div>
-
-      <div id="upload-panel" class="tab-panel active">
-        <form id="predict-form">
-          <label class="upload-box" for="image-input">
-            <input id="image-input" name="image" type="file" accept="image/*" capture="environment" required>
-            <span>Select image or click from phone camera</span>
-          </label>
-          <button type="submit" class="primary-btn">Analyze Image</button>
-        </form>
-      </div>
-
-      <div id="camera-panel" class="tab-panel">
-        <div class="camera-wrap">
-          <video id="camera-video" autoplay playsinline></video>
-          <canvas id="camera-canvas" hidden></canvas>
+      <section class="arch-section">
+        <h2>EfficientNetB3 Architecture Visual</h2>
+        <p class="arch-sub">
+          Optimized inference flow used by this model for 30-class skin disease prediction.
+        </p>
+        <div class="arch-flow">
+          <div class="arch-node">
+            <p class="arch-title">Input Layer</p>
+            <p class="arch-text">RGB image, resize to 300×300</p>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <p class="arch-title">EfficientNetB3 Backbone</p>
+            <p class="arch-text">Pretrained feature extractor</p>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <p class="arch-title">Global Avg Pooling</p>
+            <p class="arch-text">Compact deep features</p>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <p class="arch-title">Dense + Dropout</p>
+            <p class="arch-text">Regularized classifier head</p>
+          </div>
+          <span class="arch-arrow">→</span>
+          <div class="arch-node">
+            <p class="arch-title">Softmax Output</p>
+            <p class="arch-text">30 disease class probabilities</p>
+          </div>
         </div>
+      </section>
+
+      <main class="panel">
+        <section class="upload-zone" id="dropzone" tabindex="0">
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/bmp" hidden />
+          <div class="upload-inner">
+            <span class="upload-icon" aria-hidden="true">+</span>
+            <p><strong>Drop an image here</strong> or click to browse</p>
+            <p class="hint">JPEG, PNG, WebP, BMP — max 16&nbsp;MB</p>
+          </div>
+        </section>
         <div class="camera-actions">
-          <button id="start-camera" class="secondary-btn" type="button">Start Camera</button>
-          <button id="capture-camera" class="secondary-btn" type="button">Capture & Analyze</button>
-          <button id="stop-camera" class="ghost-btn" type="button">Stop</button>
+          <button type="button" class="btn ghost" id="btn-open-camera">Open Camera</button>
+          <button type="button" class="btn ghost hidden" id="btn-capture">Capture Photo</button>
+          <button type="button" class="btn ghost hidden" id="btn-close-camera">Close Camera</button>
         </div>
-      </div>
-
-      <div id="loading" class="loading hidden">Running model inference...</div>
-      <p class="disclaimer">Not a medical diagnosis. Always confirm with a licensed dermatologist.</p>
-    </section>
-
-    <section class="card result-card">
-      <h2>Prediction Result</h2>
-      <div id="result-empty" class="muted">No prediction yet. Submit an image to see results.</div>
-      <div id="result-content" class="hidden">
-        <div class="primary-result">
-          <h3 id="predicted-name"></h3>
-          <p id="predicted-confidence"></p>
-          <p id="predicted-summary" class="muted"></p>
+        <div class="camera-wrap hidden" id="camera-wrap">
+          <video id="camera-video" autoplay playsinline muted></video>
+          <canvas id="camera-canvas" class="hidden"></canvas>
         </div>
 
-        <div class="result-grid">
-          <div>
-            <h4>Top-3 Model Predictions</h4>
-            <ul id="top-predictions"></ul>
-          </div>
-          <div>
-            <h4>Doctor Recommendation</h4>
-            <p id="urgency"></p>
-            <p id="specialist"></p>
-            <ul id="recommended-actions"></ul>
+        <div class="preview-row hidden" id="preview-row">
+          <figure class="thumb-wrap">
+            <img id="preview-img" alt="Preview" />
+          </figure>
+          <div class="actions">
+            <button type="button" class="btn primary" id="btn-analyze" disabled>Analyze</button>
+            <button type="button" class="btn ghost" id="btn-clear">Clear</button>
           </div>
         </div>
 
-        <div class="result-grid">
-          <div>
-            <h4>Common Signs</h4>
-            <ul id="common-signs"></ul>
-          </div>
-          <div>
-            <h4>Possible Triggers</h4>
-            <ul id="possible-triggers"></ul>
-          </div>
-        </div>
+        <p class="status" id="status" role="status"></p>
 
-        <p id="result-disclaimer" class="disclaimer"></p>
-      </div>
-    </section>
+        <section class="results hidden" id="results">
+          <h2>Top prediction</h2>
+          <div class="top-card" id="top-card"></div>
+          <div class="recommend-card" id="recommend-card"></div>
+          <h3>Top matches</h3>
+          <ol class="rank-list" id="rank-list"></ol>
+          <p class="disclaimer" id="disclaimer"></p>
+          <p class="disclaimer" id="disclaimer-hi"></p>
+        </section>
+      </main>
 
-    <section class="card full-width">
-      <h2>How This Classifier Works</h2>
-      <ol class="steps">
-        <li>Input image is resized to 224x224 and normalized to [0, 1].</li>
-        <li>EfficientNet-based model extracts visual lesion features.</li>
-        <li>Softmax layer calculates probability for all 30 classes.</li>
-        <li>Top-3 confidence classes are shown with next-step guidance.</li>
-      </ol>
-      <p class="muted">Training references and class list are loaded from your notebook output artifacts.</p>
-    </section>
-
-    <section class="card full-width">
-      <h2>All 30 Detected Disease Classes</h2>
-      <input id="disease-search" class="search" type="text" placeholder="Search disease class...">
-      <div id="disease-list" class="disease-list"></div>
-    </section>
-
-    <section class="card full-width about">
-      <h2>About This Project</h2>
-      <p>
-        This project was built by {{ project_owner.name }} for AI-based multi-class skin disease recognition,
-        including model training, evaluation, and deployment with Flask.
-      </p>
-      <div class="contact-row">
-        <a href="{{ project_owner.github }}" target="_blank" rel="noreferrer">GitHub</a>
-        <a href="{{ project_owner.linkedin }}" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a href="mailto:{{ project_owner.email }}">Email</a>
-      </div>
-      <p class="muted">For collaboration, internship, research, and project contact, use the links above.</p>
-    </section>
-  </main>
-
-  <script id="disease-data" type="application/json">{{ diseases | tojson }}</script>
-  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+      <footer class="foot">
+        <p>
+          Outputs are probabilistic and may be wrong. This tool is for learning and research, not
+          clinical use.
+        </p>
+        <p>
+          <strong>Connect with me:</strong>
+          <a href="https://github.com/itsluckysharma01" target="_blank" rel="noopener noreferrer">GitHub</a>
+          |
+          <a href="https://www.linkedin.com/in/itsluckysharma01" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          |
+          <a href="mailto:itsluckysharma001@gmail.com">itsluckysharma001@gmail.com</a>
+        </p>
+        <p><strong>Creator/Author: Lucky Sharma</strong></p>
+      </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
 </html>

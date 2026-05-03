@@ -1,275 +1,209 @@
-const diseaseDataElement = document.getElementById("disease-data");
-let diseaseData = [];
+(function () {
+  const dropzone = document.getElementById("dropzone");
+  const fileInput = document.getElementById("file-input");
+  const previewRow = document.getElementById("preview-row");
+  const previewImg = document.getElementById("preview-img");
+  const btnAnalyze = document.getElementById("btn-analyze");
+  const btnClear = document.getElementById("btn-clear");
+  const btnOpenCamera = document.getElementById("btn-open-camera");
+  const btnCapture = document.getElementById("btn-capture");
+  const btnCloseCamera = document.getElementById("btn-close-camera");
+  const cameraWrap = document.getElementById("camera-wrap");
+  const cameraVideo = document.getElementById("camera-video");
+  const cameraCanvas = document.getElementById("camera-canvas");
+  const statusEl = document.getElementById("status");
+  const resultsEl = document.getElementById("results");
+  const topCard = document.getElementById("top-card");
+  const recommendCard = document.getElementById("recommend-card");
+  const rankList = document.getElementById("rank-list");
+  const disclaimerEl = document.getElementById("disclaimer");
+  const disclaimerHiEl = document.getElementById("disclaimer-hi");
 
-try {
-  diseaseData = JSON.parse(diseaseDataElement?.textContent || "[]");
-  if (!Array.isArray(diseaseData)) {
-    diseaseData = [];
+  let currentFile = null;
+  let mediaStream = null;
+
+  function setStatus(text, kind) {
+    statusEl.textContent = text || "";
+    statusEl.className = "status" + (kind ? " " + kind : "");
   }
-} catch (error) {
-  diseaseData = [];
-}
 
-const tabButtons = document.querySelectorAll(".tab-btn");
-const tabPanels = {
-  upload: document.getElementById("upload-panel"),
-  camera: document.getElementById("camera-panel"),
-};
+  function showResults(data) {
+    resultsEl.classList.remove("hidden");
+    const top = data.top_prediction;
+    topCard.innerHTML =
+      '<p class="label"></p><p class="label-hi"></p><p class="conf"></p>';
+    topCard.querySelector(".label").textContent = top.label;
+    topCard.querySelector(".label-hi").textContent = "Hindi: " + (top.label_hi || top.label);
+    topCard.querySelector(".conf").textContent =
+      (top.confidence * 100).toFixed(2) + "% confidence";
+    recommendCard.textContent = "Recommendation: " + (top.recommendation || "Consult dermatologist.");
 
-const form = document.getElementById("predict-form");
-const imageInput = document.getElementById("image-input");
-const loading = document.getElementById("loading");
-
-const resultEmpty = document.getElementById("result-empty");
-const resultContent = document.getElementById("result-content");
-const predictedName = document.getElementById("predicted-name");
-const predictedConfidence = document.getElementById("predicted-confidence");
-const predictedSummary = document.getElementById("predicted-summary");
-const topPredictions = document.getElementById("top-predictions");
-const urgency = document.getElementById("urgency");
-const specialist = document.getElementById("specialist");
-const actions = document.getElementById("recommended-actions");
-const signs = document.getElementById("common-signs");
-const triggers = document.getElementById("possible-triggers");
-const resultDisclaimer = document.getElementById("result-disclaimer");
-
-const diseaseSearch = document.getElementById("disease-search");
-const diseaseList = document.getElementById("disease-list");
-
-const video = document.getElementById("camera-video");
-const canvas = document.getElementById("camera-canvas");
-const startCameraButton = document.getElementById("start-camera");
-const captureButton = document.getElementById("capture-camera");
-const stopCameraButton = document.getElementById("stop-camera");
-
-let cameraStream = null;
-
-function setActiveTab(tab) {
-  tabButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.tab === tab);
-  });
-
-  Object.keys(tabPanels).forEach((key) => {
-    tabPanels[key].classList.toggle("active", key === tab);
-  });
-}
-
-function createListItems(items) {
-  const fragment = document.createDocumentFragment();
-  items.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    fragment.appendChild(li);
-  });
-  return fragment;
-}
-
-function renderPrediction(result) {
-  const primary = result.predicted;
-  const details = primary.details || {};
-
-  predictedName.textContent = primary.class_name;
-  predictedConfidence.textContent = `Confidence: ${primary.probability}%`;
-  predictedSummary.textContent = details.clinical_summary || "";
-
-  topPredictions.innerHTML = "";
-  result.top_predictions.forEach((item) => {
-    const li = document.createElement("li");
-    li.textContent = `${item.class_name} - ${item.probability}%`;
-    topPredictions.appendChild(li);
-  });
-
-  urgency.textContent = `Urgency: ${details.urgency || "Not specified"}`;
-  specialist.textContent = `Recommended specialist: ${details.specialist || "Dermatologist"}`;
-
-  actions.innerHTML = "";
-  signs.innerHTML = "";
-  triggers.innerHTML = "";
-
-  actions.appendChild(createListItems(details.recommended_actions || []));
-  signs.appendChild(createListItems(details.common_signs || []));
-  triggers.appendChild(createListItems(details.possible_triggers || []));
-
-  resultDisclaimer.textContent = result.disclaimer || "";
-
-  resultEmpty.classList.add("hidden");
-  resultContent.classList.remove("hidden");
-}
-
-async function runPredictionWithFormData(formData) {
-  loading.classList.remove("hidden");
-
-  try {
-    const response = await fetch("/api/predict", {
-      method: "POST",
-      body: formData,
+    rankList.innerHTML = "";
+    data.top_k.forEach((row) => {
+      const li = document.createElement("li");
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = row.rank + ". " + row.label + " | " + (row.label_hi || row.label);
+      const pct = document.createElement("span");
+      pct.className = "pct";
+      pct.textContent = (row.confidence * 100).toFixed(1) + "%";
+      li.appendChild(name);
+      li.appendChild(pct);
+      rankList.appendChild(li);
     });
-    const payload = await response.json();
 
-    if (!payload.ok) {
-      alert(payload.error || "Prediction failed.");
+    disclaimerEl.textContent = data.disclaimer || "";
+    disclaimerHiEl.textContent = data.disclaimer_hi || "";
+  }
+
+  function resetResults() {
+    resultsEl.classList.add("hidden");
+    topCard.innerHTML = "";
+    recommendCard.innerHTML = "";
+    rankList.innerHTML = "";
+    disclaimerEl.textContent = "";
+    disclaimerHiEl.textContent = "";
+  }
+
+  function onFile(file) {
+    if (!file || !file.type.startsWith("image/")) {
+      setStatus("Please choose an image file.", "error");
       return;
     }
-
-    renderPrediction(payload.result);
-  } catch (error) {
-    alert("Unable to connect to prediction service.");
-  } finally {
-    loading.classList.add("hidden");
-  }
-}
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  if (!imageInput.files.length) {
-    alert("Please select an image first.");
-    return;
+    currentFile = file;
+    const url = URL.createObjectURL(file);
+    previewImg.onload = function () {
+      URL.revokeObjectURL(url);
+    };
+    previewImg.src = url;
+    previewRow.classList.remove("hidden");
+    btnAnalyze.disabled = false;
+    resetResults();
+    setStatus("Ready to analyze.");
   }
 
-  const formData = new FormData();
-  formData.append("image", imageInput.files[0]);
-  await runPredictionWithFormData(formData);
-});
-
-startCameraButton.addEventListener("click", async () => {
-  try {
-    cameraStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment" },
-      audio: false,
-    });
-    video.srcObject = cameraStream;
-  } catch (error) {
-    alert("Camera access was denied or not available.");
-  }
-});
-
-stopCameraButton.addEventListener("click", () => {
-  if (!cameraStream) {
-    return;
-  }
-  cameraStream.getTracks().forEach((track) => track.stop());
-  cameraStream = null;
-  video.srcObject = null;
-});
-
-captureButton.addEventListener("click", async () => {
-  if (!cameraStream) {
-    alert("Start camera first.");
-    return;
-  }
-
-  const width = video.videoWidth || 640;
-  const height = video.videoHeight || 480;
-
-  canvas.width = width;
-  canvas.height = height;
-
-  const ctx = canvas.getContext("2d");
-  ctx.drawImage(video, 0, 0, width, height);
-
-  const blob = await new Promise((resolve) =>
-    canvas.toBlob(resolve, "image/jpeg", 0.95),
-  );
-  if (!blob) {
-    alert("Could not capture camera frame.");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("image", blob, "camera-capture.jpg");
-  await runPredictionWithFormData(formData);
-});
-
-tabButtons.forEach((button) => {
-  button.addEventListener("click", () => setActiveTab(button.dataset.tab));
-});
-
-function createDiseaseCard(item) {
-  const wrapper = document.createElement("article");
-  wrapper.className = "disease-item";
-
-  const head = document.createElement("button");
-  head.className = "disease-head";
-  head.type = "button";
-  head.textContent = `${item.index + 1}. ${item.name}`;
-
-  const body = document.createElement("div");
-  body.className = "disease-body";
-
-  const details = item.details || {};
-
-  const summary = document.createElement("p");
-  summary.textContent = details.clinical_summary || "";
-
-  const urgencyLine = document.createElement("p");
-  urgencyLine.innerHTML = `<strong>Urgency:</strong> ${details.urgency || "N/A"}`;
-
-  const specialistLine = document.createElement("p");
-  specialistLine.innerHTML = `<strong>Specialist:</strong> ${details.specialist || "Dermatologist"}`;
-
-  const signsTitle = document.createElement("p");
-  signsTitle.innerHTML = "<strong>Common signs</strong>";
-  const signsList = document.createElement("ul");
-  (details.common_signs || []).forEach((entry) => {
-    const li = document.createElement("li");
-    li.textContent = entry;
-    signsList.appendChild(li);
-  });
-
-  const actionsTitle = document.createElement("p");
-  actionsTitle.innerHTML = "<strong>Recommended actions</strong>";
-  const actionsList = document.createElement("ul");
-  (details.recommended_actions || []).forEach((entry) => {
-    const li = document.createElement("li");
-    li.textContent = entry;
-    actionsList.appendChild(li);
-  });
-
-  body.appendChild(summary);
-  body.appendChild(urgencyLine);
-  body.appendChild(specialistLine);
-  body.appendChild(signsTitle);
-  body.appendChild(signsList);
-  body.appendChild(actionsTitle);
-  body.appendChild(actionsList);
-
-  head.addEventListener("click", () => {
-    wrapper.classList.toggle("open");
-  });
-
-  wrapper.appendChild(head);
-  wrapper.appendChild(body);
-
-  return wrapper;
-}
-
-function renderDiseaseList(filterValue = "") {
-  const query = filterValue.trim().toLowerCase();
-  diseaseList.innerHTML = "";
-
-  const filtered = diseaseData.filter((item) => {
-    if (!query) {
-      return true;
+  async function openCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setStatus("Camera is not supported in this browser.", "error");
+      return;
     }
-    const source =
-      `${item.name} ${item.details?.clinical_summary || ""}`.toLowerCase();
-    return source.includes(query);
-  });
-
-  if (!filtered.length) {
-    diseaseList.innerHTML = '<p class="muted">No matching class found.</p>';
-    return;
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false,
+      });
+      cameraVideo.srcObject = mediaStream;
+      cameraWrap.classList.remove("hidden");
+      btnCapture.classList.remove("hidden");
+      btnCloseCamera.classList.remove("hidden");
+      setStatus("Camera ready. Click Capture Photo.");
+    } catch (err) {
+      setStatus("Could not open camera: " + err.message, "error");
+    }
   }
 
-  const fragment = document.createDocumentFragment();
-  filtered.forEach((item) => fragment.appendChild(createDiseaseCard(item)));
-  diseaseList.appendChild(fragment);
-}
+  function closeCamera() {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach((t) => t.stop());
+      mediaStream = null;
+    }
+    cameraVideo.srcObject = null;
+    cameraWrap.classList.add("hidden");
+    btnCapture.classList.add("hidden");
+    btnCloseCamera.classList.add("hidden");
+  }
 
-diseaseSearch.addEventListener("input", () => {
-  renderDiseaseList(diseaseSearch.value);
-});
+  function captureFromCamera() {
+    if (!mediaStream) return;
+    const w = cameraVideo.videoWidth || 640;
+    const h = cameraVideo.videoHeight || 480;
+    cameraCanvas.width = w;
+    cameraCanvas.height = h;
+    const ctx = cameraCanvas.getContext("2d");
+    ctx.drawImage(cameraVideo, 0, 0, w, h);
+    cameraCanvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          setStatus("Capture failed.", "error");
+          return;
+        }
+        const file = new File([blob], "camera-photo.jpg", { type: "image/jpeg" });
+        onFile(file);
+        closeCamera();
+      },
+      "image/jpeg",
+      0.95
+    );
+  }
 
-renderDiseaseList();
-setActiveTab("upload");
+  dropzone.addEventListener("click", () => fileInput.click());
+  dropzone.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  ["dragenter", "dragover"].forEach((ev) => {
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = "var(--accent)";
+    });
+  });
+  ["dragleave", "drop"].forEach((ev) => {
+    dropzone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      dropzone.style.borderColor = "";
+    });
+  });
+  dropzone.addEventListener("drop", (e) => {
+    const f = e.dataTransfer.files[0];
+    onFile(f);
+  });
+
+  fileInput.addEventListener("change", () => {
+    const f = fileInput.files[0];
+    onFile(f);
+  });
+  btnOpenCamera.addEventListener("click", openCamera);
+  btnCapture.addEventListener("click", captureFromCamera);
+  btnCloseCamera.addEventListener("click", closeCamera);
+
+  btnClear.addEventListener("click", () => {
+    currentFile = null;
+    fileInput.value = "";
+    previewRow.classList.add("hidden");
+    previewImg.removeAttribute("src");
+    btnAnalyze.disabled = true;
+    closeCamera();
+    resetResults();
+    setStatus("");
+  });
+
+  btnAnalyze.addEventListener("click", async () => {
+    if (!currentFile) return;
+    const fd = new FormData();
+    fd.append("image", currentFile, currentFile.name);
+
+    btnAnalyze.disabled = true;
+    setStatus("Running model… first load can take a few seconds.", "loading");
+
+    try {
+      const res = await fetch("/api/predict", {
+        method: "POST",
+        body: fd,
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setStatus(data.error || "Request failed.", "error");
+        btnAnalyze.disabled = false;
+        return;
+      }
+      showResults(data);
+      setStatus("Done.");
+    } catch (err) {
+      setStatus("Network error: " + err.message, "error");
+    }
+    btnAnalyze.disabled = false;
+  });
+})();
