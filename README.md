@@ -132,23 +132,8 @@ It is not a substitute for professional medical diagnosis, treatment, or emergen
 
 ## Author
 
-<<<<<<< HEAD
 - Lucky Sharma
 -@itsluckysharma01
 - GitHub: https://github.com/itsluckysharma01
 - LinkedIn: https://www.linkedin.com/in/itsluckysharma01/
 - Email: itsluckysharma001@gmail.com
-=======
-- Lucky Sharma (@itsluckysharma01)
-
-## Acknowledgments
-
-- Thanks to all contributors who helped in developing this project
-- Special thanks to the medical professionals who helped in validating the results
-
-## Contact
-- Lucky Sharma (@itsluckysharma01)
-- ---
-  Gmail:- itsluckysharma001@gmail.com
-
->>>>>>> 24a5c91c70feabc4bde18654d88bbce1142d92b1
