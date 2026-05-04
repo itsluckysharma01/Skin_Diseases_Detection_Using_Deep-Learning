@@ -17,10 +17,10 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_MODEL = BASE_DIR / "Models(67)" / "effBb3" / "best_phase2.keras"
-DEFAULT_LABELS = BASE_DIR / "Output" / "effb3" / "class_names.json"
+DEFAULT_DISEASE_INFO = BASE_DIR / "data" / "disease_info.json"
 
 MODEL_PATH = Path(os.environ.get("SKIN_MODEL_PATH", str(DEFAULT_MODEL)))
-CLASS_NAMES_PATH = Path(os.environ.get("SKIN_CLASS_NAMES_PATH", str(DEFAULT_LABELS)))
+DISEASE_INFO_PATH = Path(os.environ.get("SKIN_DISEASE_INFO_PATH", str(DEFAULT_DISEASE_INFO)))
 
 IMG_SIZE = (300, 300)
 ALLOWED_EXT = {".jpg", ".jpeg", ".png", ".webp", ".bmp"}
@@ -89,12 +89,11 @@ def _apply_keras_quantization_compat() -> None:
 def get_class_names() -> list[str]:
     global _class_names
     if _class_names is None:
-        if not CLASS_NAMES_PATH.is_file():
-            raise FileNotFoundError(f"Missing class names: {CLASS_NAMES_PATH}")
-        with open(CLASS_NAMES_PATH, encoding="utf-8") as f:
-            data: dict[str, str] = json.load(f)
-        n = len(data)
-        _class_names = [data[str(i)] for i in range(n)]
+        if not DISEASE_INFO_PATH.is_file():
+            raise FileNotFoundError(f"Missing disease info: {DISEASE_INFO_PATH}")
+        with open(DISEASE_INFO_PATH, encoding="utf-8") as f:
+            data: dict[str, dict] = json.load(f)
+        _class_names = list(data.keys())
     return _class_names
 
 
@@ -160,14 +159,14 @@ def favicon():
 @app.route("/api/health")
 def health():
     ok_model = MODEL_PATH.is_file()
-    ok_labels = CLASS_NAMES_PATH.is_file()
+    ok_disease_info = DISEASE_INFO_PATH.is_file()
     return jsonify(
         {
-            "status": "ok" if ok_model and ok_labels else "degraded",
+            "status": "ok" if ok_model and ok_disease_info else "degraded",
             "model_path": str(MODEL_PATH),
             "model_exists": ok_model,
-            "labels_path": str(CLASS_NAMES_PATH),
-            "labels_exist": ok_labels,
+            "disease_info_path": str(DISEASE_INFO_PATH),
+            "disease_info_exists": ok_disease_info,
         }
     )
 
