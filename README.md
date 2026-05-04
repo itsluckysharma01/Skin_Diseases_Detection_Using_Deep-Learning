@@ -52,10 +52,6 @@
   }
 </style>
 
-## FrontEnd of Project
-
-![1777888280353](image/README/1777888280353.png)
-
 **AI-powered skin disease classification with interactive prediction & recommendations**
 
 [![Open in Browser](https://img.shields.io/badge/🚀_Open%20in%20Browser-Click%20Here-brightgreen?style=for-the-badge&logo=firefox)](http://127.0.0.1:5000)
@@ -65,6 +61,10 @@
 </div>
 
 ---
+
+## FrontEnd of Project
+
+![1777888280353](image/README/1777888280353.png)
 
 ## ✨ Key Features
 
