@@ -2,56 +2,6 @@
 
 # 🔬 Skin Disease Detection Using Deep Learning
 
-<style>
-  @keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-  }
-  
-  @keyframes shimmer {
-    0% { background-position: -1000px 0; }
-    100% { background-position: 1000px 0; }
-  }
-  
-  .badge-animate {
-    animation: slideInRight 0.6s ease-out;
-    display: inline-block;
-    margin: 5px;
-  }
-  
-  .hero-text {
-    animation: fadeInDown 0.8s ease-out;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
-  }
-  
-  .feature-card {
-    animation: slideInRight 0.8s ease-out;
-    padding: 15px;
-    border-left: 4px solid #667eea;
-    margin: 10px 0;
-    transition: all 0.3s ease;
-  }
-  
-  .feature-card:hover {
-    transform: translateX(5px);
-    background: rgba(102, 126, 234, 0.1);
-    border-left-color: #764ba2;
-  }
-</style>
-
 **AI-powered skin disease classification with interactive prediction & recommendations**
 
 [![Open in Browser](https://img.shields.io/badge/🚀_Open%20in%20Browser-Click%20Here-brightgreen?style=for-the-badge&logo=firefox)](http://127.0.0.1:5000)
@@ -428,7 +378,7 @@ If this project helped you, please consider:
 - 💬 Providing feedback
 - 🤝 Contributing improvements
 
-Thank you! 🙏
+🚩जय श्री राम 🚩! 🙏
 
 </details>
 
